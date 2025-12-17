@@ -14,8 +14,39 @@
 <p style="padding-left: 60px;">w18: 課程總結</p>
 <p style="padding-left: 30px;"><span style="background-color: #ffff00;">個人與分組網站維護 (40%)</span> - 每週至少兩次推送與課程進度相關的學習內容與心得。</p>
 <p style="padding-left: 60px;">w9 期中自評、w18 期末自評</p>
-<h1>w3</h1>
-<h1>Brython</h1>
+<h1>鬼抓人遊戲 程式碼</h1>
+<p>from browser import document, html, timer<br/>import math, time</p>
+<p># ===== 建立畫面 =====<br/>document.clear()<br/>document &lt;= html.H2("Brython 鬼抓人（30 秒生存版｜R 重新開始）")</p>
+<p>canvas = html.CANVAS(<br/> width=500,<br/> height=400,<br/> style={<br/> "border": "2px solid black",<br/> "backgroundColor": "#222"<br/> }<br/>)<br/>document &lt;= canvas</p>
+<p>ctx = canvas.getContext("2d")</p>
+<p>W, H = 500, 400</p>
+<p># ===== 障礙物 =====<br/>obstacles = [<br/> (150, 50, 200, 20),<br/> (150, 330, 200, 20),<br/> (240, 120, 20, 160)<br/>]</p>
+<p># ===== 遊戲狀態 =====<br/>keys = set()<br/>win_time = 30</p>
+<p>player = {}<br/>ghost = {}<br/>start_time = 0<br/>game_over = False<br/>message = ""</p>
+<p># ===== 初始化 / 重開 =====<br/>def reset_game():<br/> global player, ghost, start_time, game_over, message<br/> player = {"x": 80, "y": 200, "r": 10, "speed": 4}<br/> ghost = {"x": 420, "y": 200, "r": 12, "speed": 2}<br/> start_time = time.time()<br/> game_over = False<br/> message = ""</p>
+<p>reset_game()</p>
+<p># ===== 繪圖工具 =====<br/>def draw_circle(x, y, r, color):<br/> ctx.beginPath()<br/> ctx.arc(x, y, r, 0, math.pi * 2)<br/> ctx.fillStyle = color<br/> ctx.fill()</p>
+<p>def draw_obstacles():<br/> ctx.fillStyle = "#888"<br/> for x, y, w, h in obstacles:<br/> ctx.fillRect(x, y, w, h)</p>
+<p># ===== 鍵盤 =====<br/>def keydown(e):<br/> keys.add(e.key)<br/> if e.key.lower() == "r" and game_over:<br/> reset_game()</p>
+<p>def keyup(e):<br/> keys.discard(e.key)</p>
+<p>document.bind("keydown", keydown)<br/>document.bind("keyup", keyup)</p>
+<p># ===== 玩家 =====<br/>def update_player():<br/> ox, oy = player["x"], player["y"]</p>
+<p>if "ArrowUp" in keys:<br/> player["y"] -= player["speed"]<br/> if "ArrowDown" in keys:<br/> player["y"] += player["speed"]<br/> if "ArrowLeft" in keys:<br/> player["x"] -= player["speed"]<br/> if "ArrowRight" in keys:<br/> player["x"] += player["speed"]</p>
+<p>player["x"] = max(player["r"], min(W - player["r"], player["x"]))<br/> player["y"] = max(player["r"], min(H - player["r"], player["y"]))</p>
+<p>for x, y, w, h in obstacles:<br/> if x &lt; player["x"] &lt; x + w and y &lt; player["y"] &lt; y + h:<br/> player["x"], player["y"] = ox, oy</p>
+<p># ===== 鬼 =====<br/>def update_ghost():<br/> if ghost["x"] &lt; player["x"]:<br/> ghost["x"] += ghost["speed"]<br/> if ghost["x"] &gt; player["x"]:<br/> ghost["x"] -= ghost["speed"]<br/> if ghost["y"] &lt; player["y"]:<br/> ghost["y"] += ghost["speed"]<br/> if ghost["y"] &gt; player["y"]:<br/> ghost["y"] -= ghost["speed"]</p>
+<p># ===== 碰撞 =====<br/>def hit():<br/> dx = player["x"] - ghost["x"]<br/> dy = player["y"] - ghost["y"]<br/> return math.hypot(dx, dy) &lt; player["r"] + ghost["r"]</p>
+<p># ===== 主迴圈 =====<br/>def game_loop():<br/> global game_over, message</p>
+<p>ctx.clearRect(0, 0, W, H)</p>
+<p>elapsed = int(time.time() - start_time)<br/> remain = max(0, win_time - elapsed)</p>
+<p>if not game_over:<br/> update_player()<br/> update_ghost()</p>
+<p>draw_obstacles()<br/> draw_circle(player["x"], player["y"], player["r"], "#4af")<br/> draw_circle(ghost["x"], ghost["y"], ghost["r"], "#f44")</p>
+<p># 時間<br/> ctx.fillStyle = "white"<br/> ctx.font = "18px Arial"<br/> ctx.fillText(f"剩餘時間：{remain}s", 10, 25)</p>
+<p># 被抓到<br/> if hit() and not game_over:<br/> game_over = True<br/> message = "嘿嘿抓到你摟 太陽出來瞜"</p>
+<p># 勝利<br/> if remain == 0 and not game_over:<br/> game_over = True<br/> message = "你撐到天亮了！"</p>
+<p># 結束訊息（每一幀都畫 → 不會消失）<br/> if message:<br/> ctx.fillStyle = "yellow"<br/> ctx.font = "22px Arial"<br/> ctx.fillText(message, 40, 210)<br/> ctx.font = "16px Arial"<br/> ctx.fillText("按 R 重新開始", 170, 245)</p>
+<p>timer.request_animation_frame(lambda t: game_loop())</p>
+<p># ===== 啟動 =====<br/>game_loop()</p><h1>Brython</h1>
 <p><a href="https://brython.info/">Brython</a> 是一個將 <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a> 語法編譯為 <a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript">JavaScript</a> 的工具，能直接在瀏覽器中以 <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a> 撰寫前端網頁程式。</p>
 <p><button id="add1to100">1 add to 100</button><button id="robot1">機器人巡邏</button><button id="free_walk">自由行</button></p>
 <!-- 導入 brython 程式庫 -->
