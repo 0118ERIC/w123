@@ -131,7 +131,7 @@ img.add_border {
                             <li><a href="./../blog/index.html">blog</a></li>
                         </ul>
                       </li>
-                     <li><a href='About.html'>About</a><li><a href='心得.html'>心得</a><li><a href='鬼抓人遊戲 程式碼.html'>鬼抓人遊戲 程式碼</a><li class='has-children'><a href='Brython.html'>Brython</a><ul class='dropdown'><li><a href='Pyodide3.html'>Pyodide3</a></li>
+                     <li><a href='About.html'>About</a><li><a href='心得.html'>心得</a><li><a href='貪食蛇 多人版.html'>貪食蛇 多人版</a><li><a href='鬼抓人遊戲 程式碼.html'>鬼抓人遊戲 程式碼</a><li class='has-children'><a href='Brython.html'>Brython</a><ul class='dropdown'><li><a href='Pyodide3.html'>Pyodide3</a></li>
                       </ul>
                 </nav>
               </div>
@@ -142,13 +142,13 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">心得 << <a href='心得.html'>Previous</a> <a href='Brython.html'>Next</a> >> Brython<br /><h1>鬼抓人遊戲 程式碼</h1>
+    <div id="tipue_search_content">貪食蛇 多人版 << <a href='貪食蛇 多人版.html'>Previous</a> <a href='Brython.html'>Next</a> >> Brython<br /><h1>鬼抓人遊戲 程式碼</h1>
 <p class="custom-cursor-default-hover">from browser import document, html, timer<br/>import math, time</p>
 <p class="custom-cursor-default-hover"># ===== 建立畫面 =====<br/>document.clear()<br/>document &lt;= html.H2("Brython 鬼抓人（30 秒生存版｜R 重新開始）")</p>
-<p>canvas = html.CANVAS(<br/> width=500,<br/> height=400,<br/> style={<br/> "border": "2px solid black",<br/> "backgroundColor": "#222"<br/> }<br/>)<br/>document &lt;= canvas</p>
+<p class="custom-cursor-default-hover">canvas = html.CANVAS(<br/> width=500,<br/> height=400,<br/> style={<br/> "border": "2px solid black",<br/> "backgroundColor": "#222"<br/> }<br/>)<br/>document &lt;= canvas</p>
 <p>ctx = canvas.getContext("2d")</p>
-<p>W, H = 500, 400</p>
-<p># ===== 障礙物 =====<br/>obstacles = [<br/> (150, 50, 200, 20),<br/> (150, 330, 200, 20),<br/> (240, 120, 20, 160)<br/>]</p>
+<p class="custom-cursor-default-hover">W, H = 500, 400</p>
+<p class="custom-cursor-default-hover"># ===== 障礙物 =====<br/>obstacles = [<br/> (150, 50, 200, 20),<br/> (150, 330, 200, 20),<br/> (240, 120, 20, 160)<br/>]</p>
 <p class="custom-cursor-default-hover"># ===== 遊戲狀態 =====<br/>keys = set()<br/>win_time = 30</p>
 <p class="custom-cursor-default-hover">player = {}<br/>ghost = {}<br/>start_time = 0<br/>game_over = False<br/>message = ""</p>
 <p># ===== 初始化 / 重開 =====<br/>def reset_game():<br/> global player, ghost, start_time, game_over, message<br/> player = {"x": 80, "y": 200, "r": 10, "speed": 4}<br/> ghost = {"x": 420, "y": 200, "r": 12, "speed": 2}<br/> start_time = time.time()<br/> game_over = False<br/> message = ""</p>
@@ -175,7 +175,7 @@ img.add_border {
 <p class="custom-cursor-default-hover"># 結束訊息（每一幀都畫 → 不會消失）<br/> if message:<br/> ctx.fillStyle = "yellow"<br/> ctx.font = "22px Arial"<br/> ctx.fillText(message, 40, 210)<br/> ctx.font = "16px Arial"<br/> ctx.fillText("按 R 重新開始", 170, 245)</p>
 <p>timer.request_animation_frame(lambda t: game_loop())</p>
 <p># ===== 啟動 =====<br/>game_loop()</p>
-<br />心得 << <a href='心得.html'>Previous</a> <a href='Brython.html'>Next</a> >> Brython</div>
+<br />貪食蛇 多人版 << <a href='貪食蛇 多人版.html'>Previous</a> <a href='Brython.html'>Next</a> >> Brython</div>
         
     <!-- footer -->
       <div class="container">
